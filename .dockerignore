@@ -1,0 +1,7 @@
+node_modules
+dist
+coverage
+.idea
+Makefile
+.env.local
+.env.*.local
