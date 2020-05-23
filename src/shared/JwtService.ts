@@ -42,7 +42,7 @@ export class JwtService {
      */
     public decodeJwt(jwt: string): Promise<IClientData> {
         return new Promise((res, rej) => {
-            jsonwebtoken.verify(jwt, this.secret, (err: VerifyErrors, decoded: object | string) => {
+            jsonwebtoken.verify(jwt, this.secret, (err: VerifyErrors | null, decoded?: object) => {
                 return err ? rej(this.VALIDATION_ERROR) : res(decoded as IClientData);
             });
         });
