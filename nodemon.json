@@ -2,5 +2,5 @@
   "watch": ["src"],
   "ext": "ts",
   "ignore": ["src/public"],
-  "exec": "ts-node -r tsconfig-paths/register ./src --env=development"
+  "exec": "node --inspect=3001 -r ts-node/register -r tsconfig-paths/register ./src --env=development "
 }
