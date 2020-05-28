@@ -1,6 +1,6 @@
 import randomString from 'randomstring';
-import jsonwebtoken, { VerifyErrors } from 'jsonwebtoken';
-import { cookieProps } from '@shared/constants';
+import jsonwebtoken, {Secret, SignOptions, VerifyErrors} from 'jsonwebtoken';
+import {cookieProps} from '@shared/constants';
 
 
 interface IClientData {
@@ -10,8 +10,8 @@ interface IClientData {
 
 export class JwtService {
 
-    private readonly secret: string;
-    private readonly options: object;
+    private readonly secret: Secret;
+    private readonly options: SignOptions;
     private readonly VALIDATION_ERROR = 'JSON-web-token validation failed.';
 
 
