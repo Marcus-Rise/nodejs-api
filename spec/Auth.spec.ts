@@ -1,13 +1,12 @@
-import supertest from 'supertest';
+import supertest, {SuperTest, Test} from 'supertest';
 import bcrypt from 'bcrypt';
-import { BAD_REQUEST, OK, UNAUTHORIZED } from 'http-status-codes';
-import { SuperTest, Test } from 'supertest';
+import {BAD_REQUEST, OK, UNAUTHORIZED} from 'http-status-codes';
 
 import app from '@server';
 import UserDao from '@daos/User/UserDao.mock';
-import { User, UserRoles } from '@entities/User';
-import { pwdSaltRounds, cookieProps, loginFailedErr } from '@shared/constants';
-import { pErr } from '@shared/functions';
+import {User, UserRoles} from '@entities/User';
+import {cookieProps, loginFailedErr, pwdSaltRounds} from '@shared/constants';
+import {pErr} from '@shared/functions';
 
 
 describe('UserRouter', () => {

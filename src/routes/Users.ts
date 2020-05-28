@@ -1,11 +1,11 @@
-import { Request, Response, Router } from 'express';
-import { BAD_REQUEST, CREATED, OK } from 'http-status-codes';
-import { ParamsDictionary } from 'express-serve-static-core';
+import {Request, Response, Router} from 'express';
+import {BAD_REQUEST, CREATED, OK} from 'http-status-codes';
+import {ParamsDictionary} from 'express-serve-static-core';
 
 import UserDao from '@daos/User/UserDao.mock';
-import { paramMissingError } from '@shared/constants';
-import { adminMW } from './middleware';
-import { UserRoles } from '@entities/User';
+import {paramMissingError} from '@shared/constants';
+import {adminMW} from './middleware';
+import {UserRoles} from '@entities/User';
 
 
 // Init shared
@@ -29,7 +29,7 @@ router.get('/all', async (req: Request, res: Response) => {
 
 router.post('/add', async (req: Request, res: Response) => {
     // Check parameters
-    const { user } = req.body;
+    const {user} = req.body;
     if (!user) {
         return res.status(BAD_REQUEST).json({
             error: paramMissingError,
@@ -48,7 +48,7 @@ router.post('/add', async (req: Request, res: Response) => {
 
 router.put('/update', async (req: Request, res: Response) => {
     // Check Parameters
-    const { user } = req.body;
+    const {user} = req.body;
     if (!user) {
         return res.status(BAD_REQUEST).json({
             error: paramMissingError,
@@ -66,7 +66,7 @@ router.put('/update', async (req: Request, res: Response) => {
  ******************************************************************************/
 
 router.delete('/delete/:id', async (req: Request, res: Response) => {
-    const { id } = req.params as ParamsDictionary;
+    const {id} = req.params as ParamsDictionary;
     await userDao.delete(Number(id));
     return res.status(OK).end();
 });

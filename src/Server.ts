@@ -3,18 +3,17 @@ import morgan from 'morgan';
 import path from 'path';
 import helmet from 'helmet';
 
-import express, { Request, Response, NextFunction } from 'express';
-import { BAD_REQUEST } from 'http-status-codes';
+import express, {NextFunction, Request, Response} from 'express';
+import {BAD_REQUEST} from 'http-status-codes';
 import 'express-async-errors';
 
 import BaseRouter from './routes';
 import logger from '@shared/Logger';
-import { cookieProps } from '@shared/constants';
+import {cookieProps} from '@shared/constants';
 
 
 // Init express
 const app = express();
-
 
 
 /************************************************************************************
@@ -45,7 +44,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
         error: err.message,
     });
 });
-
 
 
 /************************************************************************************

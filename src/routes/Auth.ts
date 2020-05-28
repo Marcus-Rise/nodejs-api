@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt';
-import { Request, Response, Router } from 'express';
-import { BAD_REQUEST, OK, UNAUTHORIZED } from 'http-status-codes';
+import {Request, Response, Router} from 'express';
+import {BAD_REQUEST, OK, UNAUTHORIZED} from 'http-status-codes';
 
 import UserDao from '@daos/User/UserDao.mock';
-import { JwtService } from '@shared/JwtService';
-import { paramMissingError, loginFailedErr, cookieProps } from '@shared/constants';
+import {JwtService} from '@shared/JwtService';
+import {cookieProps, loginFailedErr, paramMissingError} from '@shared/constants';
 
 
 const router = Router();
@@ -18,7 +18,7 @@ const jwtService = new JwtService();
 
 router.post('/login', async (req: Request, res: Response) => {
     // Check email and password present
-    const { email, password } = req.body;
+    const {email, password} = req.body;
     if (!(email && password)) {
         return res.status(BAD_REQUEST).json({
             error: paramMissingError,
@@ -43,7 +43,7 @@ router.post('/login', async (req: Request, res: Response) => {
         id: user.id,
         role: user.role,
     });
-    const { key, options } = cookieProps;
+    const {key, options} = cookieProps;
     res.cookie(key, jwt, options);
     // Return
     return res.status(OK).end();
@@ -55,7 +55,7 @@ router.post('/login', async (req: Request, res: Response) => {
  ******************************************************************************/
 
 router.get('/logout', async (req: Request, res: Response) => {
-    const { key, options } = cookieProps;
+    const {key, options} = cookieProps;
     res.clearCookie(key, options);
     return res.status(OK).end();
 });
