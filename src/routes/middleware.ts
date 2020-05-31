@@ -1,9 +1,9 @@
 import {NextFunction, Request, Response} from 'express';
 import {UNAUTHORIZED} from 'http-status-codes';
 
-import {UserRoles} from '@entities/User';
 import {cookieProps} from '@shared/constants';
-import {JwtService} from '@shared/JwtService';
+import {JwtService} from '../services/implementations/JwtService';
+import {UserRoles} from "@entities/UserRoles";
 
 
 const jwtService = new JwtService();

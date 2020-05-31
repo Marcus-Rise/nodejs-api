@@ -5,12 +5,12 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "module": "commonjs",
+    "module": "CommonJS",
     "outDir": "dist",
     "removeComments": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es6",
+    "target": "ESNext",
     "moduleResolution": "node",
     "paths": {
       "@daos/*": [
@@ -26,6 +26,11 @@
         "src/Server"
       ]
     },
+    "plugins": [
+      {
+        "transform": "typescript-transform-paths"
+      }
+    ],
     "types": [
       "node"
     ],

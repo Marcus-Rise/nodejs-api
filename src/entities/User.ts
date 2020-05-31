@@ -1,15 +1,5 @@
-export enum UserRoles {
-    Standard,
-    Admin,
-}
-
-export interface IUser {
-    id: number;
-    name: string;
-    email: string;
-    pwdHash: string;
-    role: UserRoles;
-}
+import {UserRoles} from "@entities/UserRoles";
+import {IUser} from "@entities/IUser";
 
 export class User implements IUser {
 

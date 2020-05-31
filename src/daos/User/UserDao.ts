@@ -1,13 +1,6 @@
-import {IUser} from '@entities/User';
+import {IUserDao} from "@daos/User/IUserDao";
+import {IUser} from "@entities/IUser";
 
-
-export interface IUserDao {
-    getOne: (email: string) => Promise<IUser | null>;
-    getAll: () => Promise<IUser[]>;
-    add: (user: IUser) => Promise<void>;
-    update: (user: IUser) => Promise<void>;
-    delete: (id: number) => Promise<void>;
-}
 
 class UserDao implements IUserDao {
 
@@ -60,4 +53,4 @@ class UserDao implements IUserDao {
     }
 }
 
-export default UserDao;
+export {UserDao};
