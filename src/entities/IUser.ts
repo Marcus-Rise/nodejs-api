@@ -1,7 +1,7 @@
 import {UserRoles} from "@entities/UserRoles";
 
 export interface IUser {
-    id: number;
+    id: string;
     name: string;
     email: string;
     pwdHash: string;

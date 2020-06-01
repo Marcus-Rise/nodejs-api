@@ -1,13 +1,11 @@
 import {NextFunction, Request, Response} from 'express';
 import {UNAUTHORIZED} from 'http-status-codes';
-
 import {cookieProps} from '@shared/constants';
-import {JwtService} from '../services/implementations/JwtService';
 import {UserRoles} from "@entities/UserRoles";
+import {container} from "@/services/serviceContainer";
+import {IJwtService} from "@/services/IJwtService";
 
-
-const jwtService = new JwtService();
-
+const jwtService = container.resolve<IJwtService>("IJwtService");
 
 // Middleware to verify if user is an admin
 export const adminMW = async (req: Request, res: Response, next: NextFunction) => {
