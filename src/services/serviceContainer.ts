@@ -1,12 +1,17 @@
 import "reflect-metadata";
 import {container} from "tsyringe";
-import {IUserDao} from "@daos/User/IUserDao";
 import {IJwtService} from "./IJwtService";
 import {JwtService} from "./implementations/JwtService";
-import {UserDao} from "@daos/User/UserDao";
+import {UserRepository} from "@/repositories/User/UserRepository";
+import {IUserRepository} from "@/repositories/User/IUserRepository";
+import {getCustomRepository} from "typeorm";
 
 container
-    .register<IUserDao>("IUserDao", UserDao)
     .register<IJwtService>("IJwtService", JwtService)
+    .register<IUserRepository>("IUserRepository", {
+        useFactory: () => {
+            return getCustomRepository(UserRepository);
+        }
+    });
 
 export {container};

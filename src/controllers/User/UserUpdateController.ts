@@ -1,14 +1,14 @@
 import {BaseController} from "../BaseController";
 import {inject, injectable} from "tsyringe";
 import e from "express";
-import {IUserDao} from "@daos/User/IUserDao";
 import {paramMissingError} from "@shared/constants";
+import {IUserRepository} from "@/repositories/User/IUserRepository";
 
 @injectable()
 export class UserUpdateController extends BaseController {
     constructor(
-        @inject("IUserDao")
-        private readonly dao: IUserDao,
+        @inject("IUserRepository")
+        private readonly repository: IUserRepository,
     ) {
         super();
     }
@@ -21,8 +21,7 @@ export class UserUpdateController extends BaseController {
         }
 
         // Update user
-        user.id = Number(user.id);
-        await this.dao.update(user);
+        await this.repository.update(user.id, user);
 
         return this.ok(res);
     }

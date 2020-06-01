@@ -1,4 +1,4 @@
 export interface IClientData {
-    id: number;
+    id: string;
     role: number;
 }

@@ -1,15 +1,15 @@
 import {BaseController} from "../BaseController";
 import {Request, Response} from "express";
 import {inject, injectable} from "tsyringe";
-import {IUserDao} from "@daos/User/IUserDao";
 import {paramMissingError} from "@shared/constants";
 import {UserRoles} from "@entities/UserRoles";
+import {IUserRepository} from "@/repositories/User/IUserRepository";
 
 @injectable()
 export class UserCreateController extends BaseController {
     constructor(
-        @inject("IUserDao")
-        private readonly dao: IUserDao,
+        @inject("IUserRepository")
+        private readonly repository: IUserRepository,
     ) {
         super();
     }
@@ -23,7 +23,7 @@ export class UserCreateController extends BaseController {
 
         // Add new user
         user.role = UserRoles.Standard;
-        await this.dao.add(user);
+        await this.repository.save(user);
 
         return this.created(res);
     }

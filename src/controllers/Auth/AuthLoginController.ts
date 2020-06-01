@@ -2,15 +2,15 @@ import bcrypt from 'bcrypt';
 import {BaseController} from "../BaseController";
 import e from "express";
 import {inject, injectable} from "tsyringe";
-import {IUserDao} from "@daos/User/IUserDao";
 import {cookieProps, loginFailedErr, paramMissingError} from "@shared/constants";
 import {IJwtService} from "@/services/IJwtService";
+import {IUserRepository} from "@/repositories/User/IUserRepository";
 
 @injectable()
 export class AuthLoginController extends BaseController {
     constructor(
-        @inject("IUserDao")
-        private readonly dao: IUserDao,
+        @inject("IUserRepository")
+        private readonly repository: IUserRepository,
         @inject("IJwtService")
         private readonly jwt: IJwtService,
     ) {
@@ -18,14 +18,15 @@ export class AuthLoginController extends BaseController {
     }
 
     protected async executeImpl(req: e.Request, res: e.Response): Promise<void | unknown> {
-        // Check email and password present
         const {email, password} = req.body;
+
+        // Check email and password present
         if (!(email && password)) {
             return this.clientError(res, paramMissingError);
         }
 
         // Fetch user
-        const user = await this.dao.getOne(email);
+        const user = await this.repository.findOne({email});
 
         if (!user) {
             return this.unauthorized(res, loginFailedErr);
@@ -40,7 +41,7 @@ export class AuthLoginController extends BaseController {
 
         // Setup Admin Cookie
         const jwt = await this.jwt.getJwt({
-            id: user.id,
+            id: user.id.toString(),
             role: user.role,
         });
         const {key, options} = cookieProps;
