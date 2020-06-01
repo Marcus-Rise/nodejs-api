@@ -8,19 +8,15 @@ export class User {
     @Column({
         unique: true,
     })
-    public name!: string;
+    public name: string;
     @Column({
         unique: true,
     })
-    public email!: string;
-    @Column(/*{
-        type: "enum",
-        enum: UserRoles,
-        default: UserRoles.Standard
-    }*/)
-    public role!: UserRoles;
+    public email: string;
     @Column()
-    public pwdHash!: string;
+    public role: UserRoles;
+    @Column()
+    public pwdHash: string;
 
     constructor(
         name: string = "",
