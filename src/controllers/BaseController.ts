@@ -3,15 +3,6 @@ import {Request, Response} from 'express'
 export abstract class BaseController {
 
     /**
-     * This is the implementation that we will leave to the
-     * subclasses to figure out.
-     */
-
-    protected abstract executeImpl (
-        req: Request, res: Response
-    ): Promise<void | unknown>;
-
-    /**
      * This is what we will call on the route handler.
      * We also make sure to catch any uncaught errors in the
      * implementation.
@@ -30,13 +21,21 @@ export abstract class BaseController {
         }
     }
 
-    public static jsonResponse (
+    protected static jsonResponse (
         res: Response, code: number, message: string
     ) {
         return res.status(code).json({ message })
     }
 
-    public ok<T> (res: Response, dto?: T) {
+    /**
+     * This is the implementation that we will leave to the
+     * subclasses to figure out.
+     */
+    protected abstract executeImpl (
+        req: Request, res: Response
+    ): Promise<void | unknown>;
+
+    protected ok<T> (res: Response, dto?: T) {
         if (!!dto) {
             res.type('application/json');
             return res.status(200).json(dto);
@@ -45,43 +44,43 @@ export abstract class BaseController {
         }
     }
 
-    public created (res: Response) {
+    protected created (res: Response) {
         return res.sendStatus(201);
     }
 
-    public clientError (res: Response, message?: string) {
+    protected clientError (res: Response, message?: string) {
         return BaseController.jsonResponse(res, 400, message ? message : 'Bad request');
     }
 
-    public unauthorized (res: Response, message?: string) {
+    protected unauthorized (res: Response, message?: string) {
         return BaseController.jsonResponse(res, 401, message ? message : 'Unauthorized');
     }
 
-    public paymentRequired (res: Response, message?: string) {
+    protected paymentRequired (res: Response, message?: string) {
         return BaseController.jsonResponse(res, 402, message ? message : 'Payment required');
     }
 
-    public forbidden (res: Response, message?: string) {
+    protected forbidden (res: Response, message?: string) {
         return BaseController.jsonResponse(res, 403, message ? message : 'Forbidden');
     }
 
-    public notFound (res: Response, message?: string) {
+    protected notFound (res: Response, message?: string) {
         return BaseController.jsonResponse(res, 404, message ? message : 'Not found');
     }
 
-    public conflict (res: Response, message?: string) {
+    protected conflict (res: Response, message?: string) {
         return BaseController.jsonResponse(res, 409, message ? message : 'Conflict');
     }
 
-    public tooMany (res: Response, message?: string) {
+    protected tooMany (res: Response, message?: string) {
         return BaseController.jsonResponse(res, 429, message ? message : 'Too many requests');
     }
 
-    public todo (res: Response) {
+    protected todo (res: Response) {
         return BaseController.jsonResponse(res, 400, 'TODO');
     }
 
-    public fail (res: Response, error: Error | string) {
+    protected fail (res: Response, error: Error | string) {
         console.log(error);
         return res.status(500).json({
             message: error.toString()
