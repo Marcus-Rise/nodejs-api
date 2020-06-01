@@ -5,9 +5,13 @@ import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 export class User {
     @PrimaryGeneratedColumn()
     public id!: number;
-    @Column()
+    @Column({
+        unique: true,
+    })
     public name!: string;
-    @Column()
+    @Column({
+        unique: true,
+    })
     public email!: string;
     @Column(/*{
         type: "enum",
