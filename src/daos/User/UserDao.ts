@@ -1,18 +1,24 @@
 import {IUserDao} from "@daos/User/IUserDao";
 import {IUser} from "@entities/IUser";
+import {getRepository} from "typeorm";
+import {User} from "@entities/User.entity";
 
-
-class UserDao implements IUserDao {
-
+export class UserDao implements IUserDao {
+    constructor(
+        private readonly repository = getRepository(User),
+    ) {
+    }
 
     /**
      * @param email
      */
     public async getOne(email: string): Promise<IUser | null> {
-        // TODO
-        return [] as any;
-    }
+        const user = await this.repository.findOne({email});
 
+        return user
+        ? {...user, id: user.id.toString()}
+        : null;
+    }
 
     /**
      *
@@ -21,7 +27,6 @@ class UserDao implements IUserDao {
         // TODO
         return [] as any;
     }
-
 
     /**
      *
@@ -32,7 +37,6 @@ class UserDao implements IUserDao {
         return {} as any;
     }
 
-
     /**
      *
      * @param user
@@ -41,7 +45,6 @@ class UserDao implements IUserDao {
         // TODO
         return {} as any;
     }
-
 
     /**
      *
@@ -52,5 +55,3 @@ class UserDao implements IUserDao {
         return {} as any;
     }
 }
-
-export {UserDao};
