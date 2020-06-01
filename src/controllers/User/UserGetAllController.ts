@@ -1,7 +1,7 @@
 import {BaseController} from "../BaseController";
 import e from "express";
 import {inject, injectable} from "tsyringe";
-import {IUser} from "@entities/IUser";
+import {IUser} from "@/models/IUser";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
 
 @injectable()

@@ -1,7 +1,7 @@
-import {UserRoles} from "@entities/UserRoles";
+import {UserRoles} from "@/entities/UserRoles";
 import {Column, Entity, ObjectID, ObjectIdColumn} from "typeorm";
 
-@Entity()
+@Entity("Users")
 export class User {
     @ObjectIdColumn()
     public id!: ObjectID;
@@ -9,36 +9,26 @@ export class User {
     public name!: string;
     @Column()
     public email!: string;
-    @Column({
+    @Column(/*{
         type: "enum",
         enum: UserRoles,
         default: UserRoles.Standard
-    })
+    }*/)
     public role!: UserRoles;
     @Column()
     public pwdHash!: string;
 
-
-    /*constructor(
-        nameOrUser?: string | IUser,
-        email?: string,
-        role?: UserRoles,
-        pwdHash?: string,
+    constructor(
+        name: string = "",
+        email: string = "",
+        role: UserRoles = UserRoles.Standard,
+        pwdHash: string = "",
     ) {
-        if (typeof nameOrUser === 'string' || typeof nameOrUser === 'undefined') {
-            this.name = nameOrUser || '';
-            this.email = email || '';
-            this.role = role || UserRoles.Standard;
-            this.pwdHash = pwdHash || '';
-            this.id = id || -1;
-        } else {
-            this.name = nameOrUser.name;
-            this.email = nameOrUser.email;
-            this.role = nameOrUser.role;
-            this.pwdHash = nameOrUser.pwdHash;
-            this.id = nameOrUser.id;
-        }
-    }*/
+        this.name = name;
+        this.email = email;
+        this.role = role;
+        this.pwdHash = pwdHash;
+    }
 }
 
 export default User
