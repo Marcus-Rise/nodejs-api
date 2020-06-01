@@ -41,7 +41,7 @@ export class AuthLoginController extends BaseController {
 
         // Setup Admin Cookie
         const jwt = await this.jwt.getJwt({
-            id: user.id.toString(),
+            id: user.id,
             role: user.role,
         });
         const {key, options} = cookieProps;
