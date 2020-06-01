@@ -13,7 +13,6 @@ FROM node_modules as build
 
 COPY ./ .
 
-RUN npm run lint
 RUN npm run build
 
 FROM node_modules as dist
