@@ -35,7 +35,7 @@ class UserDaoMock extends MockDaoMock implements IUserDao {
     public async add(user: IUser): Promise<void> {
         try {
             const db = await super.openDb();
-            user.id = getRandomInt();
+            user.id = String(getRandomInt());
             db.users.push(user);
             await super.saveDb(db);
         } catch (err) {
