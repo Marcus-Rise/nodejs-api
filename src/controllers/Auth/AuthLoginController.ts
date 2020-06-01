@@ -4,7 +4,7 @@ import e from "express";
 import {inject, injectable} from "tsyringe";
 import {IUserDao} from "@daos/User/IUserDao";
 import {cookieProps, loginFailedErr, paramMissingError} from "@shared/constants";
-import {IJwtService} from "../../services/IJwtService";
+import {IJwtService} from "@/services/IJwtService";
 
 @injectable()
 export class AuthLoginController extends BaseController {
