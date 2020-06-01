@@ -2,8 +2,9 @@ import randomString from 'randomstring';
 import jsonwebtoken, {Secret, SignOptions, VerifyErrors} from 'jsonwebtoken';
 import {cookieProps} from '@shared/constants';
 import {IClientData} from "@shared/IClientData";
+import {IJwtService} from "../IJwtService";
 
-export class JwtService {
+export class JwtService implements IJwtService {
     private readonly secret: Secret;
     private readonly options: SignOptions;
     private readonly VALIDATION_ERROR = 'JSON-web-token validation failed.';
