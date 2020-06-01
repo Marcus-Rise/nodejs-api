@@ -13,6 +13,9 @@
     "target": "ESNext",
     "moduleResolution": "node",
     "paths": {
+      "@/*": [
+        "src/*"
+      ],
       "@daos/*": [
         "src/daos/*"
       ],
