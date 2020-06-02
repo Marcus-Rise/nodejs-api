@@ -1,20 +1,12 @@
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
-import path from 'path';
 import helmet from 'helmet';
-
-import express, {NextFunction, Request, Response} from 'express';
-import {BAD_REQUEST} from 'http-status-codes';
+import express from 'express';
 import 'express-async-errors';
-
 import BaseRouter from './routes';
-import logger from '@shared/Logger';
-import {cookieProps} from '@shared/constants';
-
 
 // Init express
 const app = express();
-
 
 /************************************************************************************
  *                              Set basic express settings
@@ -37,37 +29,4 @@ if (process.env.NODE_ENV === 'production') {
 // Add APIs
 app.use('/api', BaseRouter);
 
-// Print API errors
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    logger.error(err.message, err);
-    return res.status(BAD_REQUEST).json({
-        error: err.message,
-    });
-});
-
-
-/************************************************************************************
- *                              Serve front-end content
- ***********************************************************************************/
-
-const viewsDir = path.join(__dirname, 'views');
-app.set('views', viewsDir);
-const staticDir = path.join(__dirname, 'public');
-app.use(express.static(staticDir));
-
-app.get('/', (req: Request, res: Response) => {
-    res.sendFile('login.html', {root: viewsDir});
-});
-
-app.get('/users', (req: Request, res: Response) => {
-    const jwt = req.signedCookies[cookieProps.key];
-    if (!jwt) {
-        res.redirect('/');
-    } else {
-        res.sendFile('users.html', {root: viewsDir});
-    }
-});
-
-
-// Export express instance
 export default app;
