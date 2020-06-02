@@ -7,7 +7,7 @@ import {IJwtService} from "@/services/IJwtService";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
 
 @injectable()
-export class AuthLoginController extends BaseController {
+export default class AuthLoginController extends BaseController {
     constructor(
         @inject("IUserRepository")
         private readonly repository: IUserRepository,

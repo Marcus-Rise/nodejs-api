@@ -5,7 +5,7 @@ import {IUser} from "@/models/IUser";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
 
 @injectable()
-export class UserGetAllController extends BaseController {
+export default class UserGetAllController extends BaseController {
     constructor(
         @inject("IUserRepository")
         private readonly repository: IUserRepository,

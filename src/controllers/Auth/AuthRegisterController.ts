@@ -8,7 +8,7 @@ import User from "@entities/User.entity";
 import bcrypt from 'bcrypt';
 
 @injectable()
-export class AuthRegisterController extends BaseController {
+export default class AuthRegisterController extends BaseController {
     constructor(
         @inject("IUserRepository")
         private readonly repository: IUserRepository,

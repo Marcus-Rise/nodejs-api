@@ -5,7 +5,7 @@ import {ParamsDictionary} from "express-serve-static-core";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
 
 @injectable()
-export class UserDeleteController extends BaseController {
+export default class UserDeleteController extends BaseController {
     constructor(
         @inject("IUserRepository")
         private readonly repository: IUserRepository,

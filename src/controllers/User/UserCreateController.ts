@@ -6,7 +6,7 @@ import {UserRoles} from "@entities/UserRoles";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
 
 @injectable()
-export class UserCreateController extends BaseController {
+export default class UserCreateController extends BaseController {
     constructor(
         @inject("IUserRepository")
         private readonly repository: IUserRepository,

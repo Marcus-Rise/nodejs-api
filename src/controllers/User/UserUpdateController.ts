@@ -5,7 +5,7 @@ import {paramMissingError} from "@shared/constants";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
 
 @injectable()
-export class UserUpdateController extends BaseController {
+export default class UserUpdateController extends BaseController {
     constructor(
         @inject("IUserRepository")
         private readonly repository: IUserRepository,
