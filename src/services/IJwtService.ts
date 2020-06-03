@@ -1,4 +1,4 @@
-import {IClientData} from "@shared/IClientData";
+import {IClientData} from "@/models/IClientData";
 
 export interface IJwtService {
     /**

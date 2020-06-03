@@ -1,7 +1,7 @@
 import randomString from 'randomstring';
 import jsonwebtoken, {Secret, SignOptions, VerifyErrors} from 'jsonwebtoken';
 import {cookieProps} from '@shared/constants';
-import {IClientData} from "@shared/IClientData";
+import {IClientData} from "@/models/IClientData";
 import {IJwtService} from "../IJwtService";
 
 export class JwtService implements IJwtService {
