@@ -6,7 +6,7 @@ FROM base as node_modules
 
 COPY package*.json ./
 
-RUN npm ci --only=production
+RUN npm ci
 #RUN npm audit
 
 FROM node_modules as build
