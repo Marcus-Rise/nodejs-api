@@ -3,11 +3,11 @@ import bcrypt from 'bcrypt';
 import {BAD_REQUEST, OK, UNAUTHORIZED} from 'http-status-codes';
 
 import app from '@server';
-import {UserDaoMock as UserDao} from '@daos/User/UserDao.mock';
-import {User} from '@entities/User';
+import {UserDaoMock as UserDao} from 'repositories/User/UserDao.mock';
+import {User} from '@/modules/User/entities/User.entity';
 import {cookieProps, loginFailedErr, pwdSaltRounds} from '@shared/constants';
 import {pErr} from '@shared/functions';
-import {UserRoles} from "@entities/UserRoles";
+import {UserRoles} from "@/modules/User/entities/UserRoles";
 
 
 describe('UserRouter', () => {
