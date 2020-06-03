@@ -28,5 +28,6 @@ if (process.env.NODE_ENV === 'production') {
 export default useExpressServer(app, {
     controllers: [__dirname + "/controllers/**/*.{ts,js}"],
     middlewares: [__dirname + "/middlewares/**/*.{ts,js}"],
-    routePrefix: "/api"
+    routePrefix: "/api",
+    defaultErrorHandler: false,
 });
