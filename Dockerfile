@@ -17,6 +17,8 @@ RUN npm run build
 
 FROM node_modules as dist
 
+RUN npm ci --only=production
+
 COPY --from=build /app/dist /app/dist
 COPY --from=build /app/env /app/env
 
