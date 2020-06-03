@@ -1,11 +1,12 @@
 import {BaseController} from "../BaseController";
-import {injectable} from "tsyringe";
-import e from "express";
+import {Response} from "express";
 import {cookieProps} from "@shared/constants";
+import {Get, JsonController, Res} from "routing-controllers";
 
-@injectable()
+@JsonController("/auth/logout")
 export default class AuthLogoutController extends BaseController {
-    protected async executeImpl(req: e.Request, res: e.Response): Promise<void | unknown> {
+    @Get()
+    async logout(@Res() res: Response) {
         const {key, options} = cookieProps;
         res.clearCookie(key, options);
 

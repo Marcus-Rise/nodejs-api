@@ -3,14 +3,13 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import express from 'express';
 import 'express-async-errors';
-import BaseRouter from './routes';
+import {useContainer, useExpressServer} from "routing-controllers";
+import {container} from "@/services/serviceContainer";
+import {IoCAdapterImpl} from "@/IoCAdapter";
 
-// Init express
+useContainer(new IoCAdapterImpl(container));
+
 const app = express();
-
-/************************************************************************************
- *                              Set basic express settings
- ***********************************************************************************/
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -26,7 +25,8 @@ if (process.env.NODE_ENV === 'production') {
     app.use(helmet());
 }
 
-// Add APIs
-app.use('/api', BaseRouter);
-
-export default app;
+export default useExpressServer(app, {
+    controllers: [__dirname + "/controllers/**/*.{ts,js}"],
+    middlewares: [__dirname + "/middlewares/**/*.{ts,js}"],
+    routePrefix: "/api"
+});

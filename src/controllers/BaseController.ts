@@ -1,4 +1,4 @@
-import {Request, Response} from 'express'
+import {Response} from 'express'
 import {
     BAD_REQUEST,
     CONFLICT,
@@ -14,11 +14,11 @@ import {
 
 export abstract class BaseController {
 
-    /**
+  /*  /!**
      * This is what we will call on the route handler.
      * We also make sure to catch any uncaught errors in the
      * implementation.
-     */
+     *!/
 
     public async execute(
         req: Request, res: Response
@@ -29,7 +29,7 @@ export abstract class BaseController {
             console.error(`[BaseController]: Uncaught controller error`);
             this.fail(res, err)
         }
-    }
+    }*/
 
     protected static jsonResponse(
         res: Response, code: number, message: string
@@ -38,13 +38,13 @@ export abstract class BaseController {
         return res.status(code).json({message})
     }
 
-    /**
+/*    /!**
      * This is the implementation that we will leave to the
      * subclasses to figure out.
-     */
+     *!/
     protected abstract executeImpl(
         req: Request, res: Response
-    ): Promise<void | unknown>;
+    ): Promise<void | unknown>;*/
 
     protected ok<T>(res: Response, dto?: T) {
         if (!!dto) {

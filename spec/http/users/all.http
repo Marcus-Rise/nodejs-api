@@ -1,5 +1,4 @@
-GET http://localhost:3000/api/users/all
-Content-Type: application/json
+GET http://localhost:3000/api/user
 
 ###
 

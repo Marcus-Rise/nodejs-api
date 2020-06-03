@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import './LoadEnv';
 import app from '@server';
 import logger from '@shared/Logger';

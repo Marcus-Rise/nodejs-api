@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import {container} from "tsyringe";
 import {IJwtService} from "./IJwtService";
 import {JwtService} from "./implementations/JwtService";

@@ -1,12 +1,15 @@
 import {BaseController} from "../BaseController";
-import {Request, Response} from "express";
+import {Response} from "express";
 import {inject, injectable} from "tsyringe";
-import {paramMissingError} from "@shared/constants";
 import {UserRoles} from "@entities/UserRoles";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
+import {Body, JsonController, Post, Res} from "routing-controllers";
+import {IUserRegister} from "@/models/IUserRegister";
 import User from "@entities/User.entity";
-import bcrypt from 'bcrypt';
+import {paramMissingError} from "@shared/constants";
+import bcrypt from "bcrypt";
 
+@JsonController("/auth/register")
 @injectable()
 export default class AuthRegisterController extends BaseController {
     constructor(
@@ -16,9 +19,8 @@ export default class AuthRegisterController extends BaseController {
         super();
     }
 
-    protected async executeImpl(req: Request, res: Response) {
-        const dto = req.body.user;
-
+    @Post()
+    async create(@Body() dto: IUserRegister, @Res() res: Response) {
         if (!(dto.email && dto.name && dto.password)) {
             return this.clientError(res, paramMissingError);
         }

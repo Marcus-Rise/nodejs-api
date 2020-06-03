@@ -14,7 +14,7 @@ export class JwtService implements IJwtService {
         this.options = {expiresIn: cookieProps.options.maxAge.toString()};
     }
 
-    public getJwt(data: IClientData): Promise<string> {
+    public encode(data: IClientData): Promise<string> {
         return new Promise((resolve, reject) => {
             jsonwebtoken.sign(data, this.secret, this.options, (err, token) => {
                 err ? reject(err) : resolve(token);
@@ -22,7 +22,7 @@ export class JwtService implements IJwtService {
         });
     }
 
-    public decodeJwt(jwt: string): Promise<IClientData> {
+    public decode(jwt: string): Promise<IClientData> {
         return new Promise((res, rej) => {
             jsonwebtoken.verify(jwt, this.secret, (err: VerifyErrors | null, decoded?: object) => {
                 return err ? rej(this.VALIDATION_ERROR) : res(decoded as IClientData);
