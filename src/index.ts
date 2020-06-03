@@ -9,6 +9,6 @@ connectToDb()
         const host = String(process.env.HOST || "localhost");
 
         app.listen(port, host, () => {
-            logger.info(`Express server started on : http://${host}:${port}`);
+            logger.info(`Express server started on: http://${host}:${port}`);
         });
     });
