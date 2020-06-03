@@ -15,12 +15,14 @@ COPY ./ .
 
 RUN npm run build
 
-FROM node_modules as dist
+FROM base as dist
 
-RUN npm ci --only=production
+COPY --from=build /app/package*.json ./
 
-COPY --from=build /app/dist /app/dist
-COPY --from=build /app/env /app/env
+RUN npm ci --only=prod
+
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/env ./env
 
 CMD npm run start
 
