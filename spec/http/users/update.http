@@ -1,11 +1,10 @@
-PUT http://localhost:3000/api/user
+PUT http://{{host}}:{{port}}/api/user
 Content-Type: application/json
 
 {
   "name": "name1",
   "email": "email",
   "role": 0,
-  "pwdHash": "$2b$12$xP9LLl24Hr0Q5TJJjqgeX.y2aW9qeCba.GG9cAEA7iN/ZYkOEwFPG",
   "id": 2
 }
 

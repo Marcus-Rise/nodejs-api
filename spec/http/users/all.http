@@ -1,4 +1,4 @@
-GET http://localhost:3000/api/user
+GET http://{{host}}:{{port}}/api/user
 
 ###
 
