@@ -1,0 +1,12 @@
+PUT http://{{host}}:{{port}}/api/user
+Content-Type: application/json
+
+{
+  "name": "name1",
+  "email": "email",
+  "role": 0,
+  "id": 2
+}
+
+###
+

@@ -1,89 +1,66 @@
-import {Request, Response} from 'express'
+import {Response} from 'express'
+import {
+    BAD_REQUEST,
+    CONFLICT,
+    CREATED,
+    FORBIDDEN,
+    NOT_FOUND,
+    OK,
+    PAYMENT_REQUIRED,
+    TOO_MANY_REQUESTS,
+    UNAUTHORIZED
+} from "http-status-codes";
 
 export abstract class BaseController {
-
-    /**
-     * This is what we will call on the route handler.
-     * We also make sure to catch any uncaught errors in the
-     * implementation.
-     */
-
-    public async execute (
-        req: Request, res: Response
-    ): Promise<void> {
-
-        try {
-            await this.executeImpl(req, res);
-        } catch (err) {
-            console.log(`[BaseController]: Uncaught controller error`);
-            console.log(err);
-            this.fail(res, 'An unexpected error occurred')
-        }
-    }
-
-    protected static jsonResponse (
+    protected static jsonResponse(
         res: Response, code: number, message: string
     ) {
-        return res.status(code).json({ message })
+        res.type('application/json');
+        return res.status(code).json({message})
     }
 
-    /**
-     * This is the implementation that we will leave to the
-     * subclasses to figure out.
-     */
-    protected abstract executeImpl (
-        req: Request, res: Response
-    ): Promise<void | unknown>;
-
-    protected ok<T> (res: Response, dto?: T) {
+    protected ok<T>(res: Response, dto?: T) {
         if (!!dto) {
             res.type('application/json');
-            return res.status(200).json(dto);
+            return res.status(OK).json(dto);
         } else {
-            return res.sendStatus(200);
+            return res.sendStatus(OK);
         }
     }
 
-    protected created (res: Response) {
-        return res.sendStatus(201);
+    protected created(res: Response) {
+        return res.sendStatus(CREATED);
     }
 
-    protected clientError (res: Response, message?: string) {
-        return BaseController.jsonResponse(res, 400, message ? message : 'Bad request');
+    protected clientError(res: Response, message: string = 'Bad request') {
+        return BaseController.jsonResponse(res, BAD_REQUEST, message);
     }
 
-    protected unauthorized (res: Response, message?: string) {
-        return BaseController.jsonResponse(res, 401, message ? message : 'Unauthorized');
+    protected unauthorized(res: Response, message: string = 'Unauthorized') {
+        return BaseController.jsonResponse(res, UNAUTHORIZED, message);
     }
 
-    protected paymentRequired (res: Response, message?: string) {
-        return BaseController.jsonResponse(res, 402, message ? message : 'Payment required');
+    protected paymentRequired(res: Response, message: string = 'Payment required') {
+        return BaseController.jsonResponse(res, PAYMENT_REQUIRED, message);
     }
 
-    protected forbidden (res: Response, message?: string) {
-        return BaseController.jsonResponse(res, 403, message ? message : 'Forbidden');
+    protected forbidden(res: Response, message: string = 'Forbidden') {
+        return BaseController.jsonResponse(res, FORBIDDEN, message);
     }
 
-    protected notFound (res: Response, message?: string) {
-        return BaseController.jsonResponse(res, 404, message ? message : 'Not found');
+    protected notFound(res: Response, message: string = 'Not found') {
+        return BaseController.jsonResponse(res, NOT_FOUND, message);
     }
 
-    protected conflict (res: Response, message?: string) {
-        return BaseController.jsonResponse(res, 409, message ? message : 'Conflict');
+    protected conflict(res: Response, message: string = 'Conflict') {
+        return BaseController.jsonResponse(res, CONFLICT, message);
     }
 
-    protected tooMany (res: Response, message?: string) {
-        return BaseController.jsonResponse(res, 429, message ? message : 'Too many requests');
+    protected tooMany(res: Response, message: string = 'Too many requests') {
+        return BaseController.jsonResponse(res, TOO_MANY_REQUESTS, message);
     }
 
-    protected todo (res: Response) {
-        return BaseController.jsonResponse(res, 400, 'TODO');
-    }
-
-    protected fail (res: Response, error: Error | string) {
-        console.log(error);
-        return res.status(500).json({
-            message: error.toString()
-        })
+    protected todo(res: Response) {
+        return BaseController.jsonResponse(res, BAD_REQUEST, 'TODO');
     }
 }

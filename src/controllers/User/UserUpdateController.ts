@@ -1,11 +1,15 @@
 import {BaseController} from "../BaseController";
 import {inject, injectable} from "tsyringe";
-import e from "express";
-import {paramMissingError} from "@shared/constants";
+import {Response} from "express";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
+import {Body, JsonController, Put, Res, UseBefore} from "routing-controllers";
+import {IUser} from "@/models/IUser";
+import {AdminMiddleWare} from "@/middlewares/AdminMiddleWare";
 
+@JsonController("/user")
+@UseBefore(AdminMiddleWare)
 @injectable()
-export class UserUpdateController extends BaseController {
+export default class UserUpdateController extends BaseController {
     constructor(
         @inject("IUserRepository")
         private readonly repository: IUserRepository,
@@ -13,15 +17,9 @@ export class UserUpdateController extends BaseController {
         super();
     }
 
-    protected async executeImpl(req: e.Request, res: e.Response): Promise<void | unknown> {
-        const {user} = req.body;
-
-        if (!user) {
-            return this.clientError(res, paramMissingError);
-        }
-
-        // Update user
-        await this.repository.update(user.id, user);
+    @Put()
+    async update(@Body() dto: IUser, @Res() res: Response) {
+        await this.repository.update(dto.id, dto);
 
         return this.ok(res);
     }

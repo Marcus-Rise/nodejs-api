@@ -12,6 +12,7 @@
     "strict": true,
     "target": "ESNext",
     "moduleResolution": "node",
+    "lib": ["ESNext"],
     "paths": {
       "@/*": [
         "src/*"
@@ -44,8 +45,5 @@
   "include": [
     "src/**/*.ts",
     "spec/**/*.ts"
-  ],
-  "exclude": [
-    "src/public/"
   ]
 }

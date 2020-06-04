@@ -1,4 +1,4 @@
-import {IClientData} from "@shared/IClientData";
+import {IClientData} from "@/models/IClientData";
 
 export interface IJwtService {
     /**
@@ -6,12 +6,12 @@ export interface IJwtService {
      *
      * @param data
      */
-    getJwt(data: IClientData): Promise<string>;
+    encode(data: IClientData): Promise<string>;
 
     /**
      * Decrypt JWT and extract client data.
      *
      * @param jwt
      */
-    decodeJwt(jwt: string): Promise<IClientData>;
+    decode(jwt: string): Promise<IClientData>;
 }

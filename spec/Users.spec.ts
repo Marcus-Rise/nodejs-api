@@ -2,12 +2,12 @@ import supertest, {Response, SuperTest, Test} from 'supertest';
 import {BAD_REQUEST, CREATED, OK} from 'http-status-codes';
 
 import app from '@server';
-import {UserDaoMock as UserDao} from '@daos/User/UserDao.mock';
-import {User} from '@entities/User';
+import {UserDaoMock as UserDao} from 'repositories/User/UserDao.mock';
+import {User} from '@/modules/User/entities/User.entity';
 import {login} from './support/LoginAgent';
 import {pErr} from '@shared/functions';
 import {paramMissingError} from '@shared/constants';
-import {IUser} from "@entities/IUser";
+import {IUser} from "@/modules/User/models/IUser";
 
 
 describe('UserRouter', () => {
@@ -52,7 +52,7 @@ describe('UserRouter', () => {
                 .end((err: Error, res: Response) => {
                     pErr(err);
                     expect(res.status).toBe(OK);
-                    // Caste instance-objects to 'User' objects
+                    // Caste instance-objects to 'UserEntity' objects
                     const retUsers = res.body.users.map((user: IUser) => {
                         return new User(user);
                     });
