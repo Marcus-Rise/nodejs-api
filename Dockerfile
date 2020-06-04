@@ -1,4 +1,4 @@
-FROM node:12-alpine as base
+FROM node:14-alpine as base
 
 WORKDIR /app
 
@@ -17,12 +17,11 @@ RUN npm run build
 
 FROM base as dist
 
-COPY --from=build /app/package*.json ./
-
+COPY package*.json ./
 RUN npm ci --only=prod
 
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/env ./env
+COPY --from=build /app/dist /app/dist
+COPY --from=build /app/env /app/env
 
 CMD npm run start
 
