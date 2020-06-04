@@ -6,5 +6,10 @@ Content-Type: application/json
   "password": "password"
 }
 
+> {%
+    client.global.set("my_cookie", response.headers.valuesOf("Set-Cookie")[0]);
+%}
+
+
 ###
 
