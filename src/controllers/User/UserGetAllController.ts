@@ -4,10 +4,10 @@ import {inject, injectable} from "tsyringe";
 import {IUser} from "@/models/IUser";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
 import {Get, JsonController, Res, UseBefore} from "routing-controllers";
-import {AdminMiddleWare} from "@/middlewares/AdminMiddleWare";
+import {AuthedMiddleWare} from "@/middlewares/AuthedMiddleWare";
 
 @JsonController("/user")
-@UseBefore(AdminMiddleWare)
+@UseBefore(AuthedMiddleWare)
 @injectable()
 export default class UserGetAllController extends BaseController {
     constructor(
