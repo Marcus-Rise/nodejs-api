@@ -1,4 +1,7 @@
 GET http://{{host}}:{{port}}/api/auth/logout
 
+> {%
+    client.global.set("my_cookie", "");
+%}
 ###
 
