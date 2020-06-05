@@ -6,6 +6,7 @@ import 'express-async-errors';
 import {useContainer, useExpressServer} from "routing-controllers";
 import {container} from "@/services/serviceContainer";
 import {IoCAdapterImpl} from "@/IoCAdapter";
+import {cookieProps} from "@shared/constants";
 
 useContainer(new IoCAdapterImpl(container));
 
@@ -13,7 +14,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(cookieParser(cookieProps.secret));
 
 // Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {
