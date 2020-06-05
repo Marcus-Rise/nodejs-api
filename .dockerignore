@@ -2,6 +2,12 @@ node_modules
 dist
 coverage
 .idea
-Makefile
 .env.local
 .env.*.local
+Dockerfile
+.run
+docker
+logs
+docker-compose.yml
+.gitlab-ci.yml
+.gitignore

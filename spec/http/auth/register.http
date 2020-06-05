@@ -1,0 +1,11 @@
+POST http://{{host}}:{{port}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "name",
+  "email": "email",
+  "password": "password"
+}
+
+###
+

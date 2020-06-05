@@ -1,9 +1,15 @@
-import './LoadEnv'; // Must be the first import
+import "reflect-metadata";
+import './LoadEnv';
 import app from '@server';
 import logger from '@shared/Logger';
+import {connectToDb} from "@/Db";
 
-// Start the server
-const port = Number(process.env.PORT || 3000);
-app.listen(port, () => {
-    logger.info(`Express server started on : http://localhost:${port}`);
-});
+connectToDb()
+    .then(() => {
+        const port = Number(process.env.PORT || 3000);
+        const host = String(process.env.HOST || "localhost");
+
+        app.listen(port, host, () => {
+            logger.info(`Express server started on: http://${host}:${port}`);
+        });
+    });

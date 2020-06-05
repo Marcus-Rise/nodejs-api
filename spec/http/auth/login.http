@@ -1,0 +1,15 @@
+POST http://{{host}}:{{port}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "email",
+  "password": "password"
+}
+
+> {%
+    client.global.set("my_cookie", response.headers.valuesOf("Set-Cookie")[0]);
+%}
+
+
+###
+

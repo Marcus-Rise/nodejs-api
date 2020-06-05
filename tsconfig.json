@@ -5,14 +5,18 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "module": "commonjs",
+    "module": "CommonJS",
     "outDir": "dist",
     "removeComments": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es6",
+    "target": "ESNext",
     "moduleResolution": "node",
+    "lib": ["ESNext"],
     "paths": {
+      "@/*": [
+        "src/*"
+      ],
       "@daos/*": [
         "src/daos/*"
       ],
@@ -26,6 +30,11 @@
         "src/Server"
       ]
     },
+    "plugins": [
+      {
+        "transform": "typescript-transform-paths"
+      }
+    ],
     "types": [
       "node"
     ],
@@ -36,8 +45,5 @@
   "include": [
     "src/**/*.ts",
     "spec/**/*.ts"
-  ],
-  "exclude": [
-    "src/public/"
   ]
 }

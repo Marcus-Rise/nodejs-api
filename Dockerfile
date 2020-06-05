@@ -1,4 +1,4 @@
-FROM node:12-alpine as base
+FROM node:14-alpine as base
 
 WORKDIR /app
 
@@ -13,10 +13,12 @@ FROM node_modules as build
 
 COPY ./ .
 
-RUN npm run lint
 RUN npm run build
 
-FROM node_modules as dist
+FROM base as dist
+
+COPY package*.json ./
+RUN npm ci --only=prod
 
 COPY --from=build /app/dist /app/dist
 COPY --from=build /app/env /app/env
