@@ -17,6 +17,7 @@ RUN npm run build
 
 FROM base as dist
 
+# Reduce image size by splicing node_modules
 COPY package*.json ./
 RUN npm ci --only=prod
 
