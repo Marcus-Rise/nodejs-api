@@ -5,7 +5,7 @@
     "dev": "nodemon --config nodemon.json",
     "typeorm": "node -r ts-node/register -r tsconfig-paths/register -r dotenv/config ./node_modules/typeorm/cli.js ",
     "lint": "tslint --project \"tsconfig.json\"",
-    "test": "nodemon --config nodemon.test.json",
+    "test": "jest",
     "build": "node ./util/build.js",
     "start": "node ./dist"
   },
@@ -44,7 +44,6 @@
     "@types/node": "^14.0.5",
     "@types/randomstring": "^1.1.6",
     "@types/supertest": "^2.0.9",
-    "find": "^0.3.0",
     "fs-extra": "^9.0.0",
     "jest-mock-extended": "^1.0.8",
     "jest": "^26.0.1",

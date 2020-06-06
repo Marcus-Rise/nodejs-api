@@ -5,8 +5,8 @@ import app from '@server';
 import {UserDaoMock as UserDao} from 'repositories/User/UserDao.mock';
 import {User} from '@/modules/User/entities/User.entity';
 import {login} from './support/LoginAgent';
-import {pErr} from '@shared/functions';
-import {paramMissingError} from '@shared/constants';
+import {pErr} from '@/shared/functions';
+import {paramMissingError} from '@/shared/constants';
 import {IUser} from "@/modules/User/models/IUser";
 
 

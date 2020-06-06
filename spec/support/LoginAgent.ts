@@ -1,11 +1,9 @@
 import bcrypt from 'bcrypt';
 import {SuperTest, Test} from 'supertest';
-
-import {User} from '@/modules/User/entities/User.entity';
-import {UserDaoMock as UserDao} from 'repositories/User/UserDao.mock';
-import {pwdSaltRounds} from '@shared/constants';
-import {UserRoles} from "@/modules/User/entities/UserRoles";
-
+import {User} from '@/entities/User.entity';
+import {UserDaoMock as UserDao} from '@/repositories/User/UserDao.mock';
+import {pwdSaltRounds} from '@/shared/constants';
+import {UserRoles} from "@/entities/UserRoles";
 
 const creds = {
     email: 'jsmith@gmail.com',
