@@ -6,7 +6,13 @@ try {
     // Remove current build
     fs.removeSync('./dist/');
     // Transpile the typescript files
-    childProcess.exec('ttsc --build tsconfig.prod.json');
+    const proc = childProcess.exec('ttsc --build tsconfig.prod.json');
+
+    proc.on('close', (code) => {
+        if (code !== 0) {
+            throw Error("Build failed")
+        }
+    })
 } catch (err) {
     console.log(err);
 }
