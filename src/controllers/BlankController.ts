@@ -2,7 +2,7 @@ import {BaseController} from "@/controllers/BaseController";
 import {Get, JsonController, Res} from "routing-controllers";
 import {Response} from "express";
 import {IUser} from "@/models/IUser";
-import User from "@entities/User.entity";
+import User from "@/entities/User.entity";
 
 @JsonController()
 export class BlankController extends BaseController {

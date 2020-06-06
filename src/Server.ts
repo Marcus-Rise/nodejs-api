@@ -6,7 +6,7 @@ import 'express-async-errors';
 import {useContainer, useExpressServer} from "routing-controllers";
 import {container} from "@/services/serviceContainer";
 import {IoCAdapterImpl} from "@/IoCAdapter";
-import {cookieProps} from "@shared/constants";
+import {cookieProps} from "@/shared/constants";
 
 useContainer(new IoCAdapterImpl(container));
 

@@ -16,18 +16,6 @@
     "paths": {
       "@/*": [
         "src/*"
-      ],
-      "@daos/*": [
-        "src/daos/*"
-      ],
-      "@entities/*": [
-        "src/entities/*"
-      ],
-      "@shared/*": [
-        "src/shared/*"
-      ],
-      "@server": [
-        "src/Server"
       ]
     },
     "plugins": [

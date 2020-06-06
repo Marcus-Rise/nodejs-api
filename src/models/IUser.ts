@@ -1,4 +1,4 @@
-import {UserRoles} from "@entities/UserRoles";
+import {UserRoles} from "@/entities/UserRoles";
 
 export interface IUser {
     id: number;
