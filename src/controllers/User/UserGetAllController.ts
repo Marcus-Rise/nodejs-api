@@ -1,4 +1,3 @@
-import {BaseController} from "../BaseController";
 import {Response} from "express";
 import {inject, injectable} from "tsyringe";
 import {IUser} from "@/models/IUser";
@@ -9,19 +8,17 @@ import {AuthedMiddleWare} from "@/middlewares/AuthedMiddleWare";
 @JsonController("/user")
 @UseBefore(AuthedMiddleWare)
 @injectable()
-export default class UserGetAllController extends BaseController {
+export default class UserGetAllController {
     constructor(
         @inject("IUserRepository")
         private readonly repository: IUserRepository,
     ) {
-        super();
     }
 
     @Get()
     async get(@Res() res: Response) {
-        const users = await this.repository.find();
+        const array: IUser[] = await this.repository.find();
 
-        return this.ok<{users: IUser[]}>(res, {users});
+        return array;
     }
-
 }

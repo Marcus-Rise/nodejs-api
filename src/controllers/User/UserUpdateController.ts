@@ -1,26 +1,23 @@
-import {BaseController} from "../BaseController";
 import {inject, injectable} from "tsyringe";
-import {Response} from "express";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
-import {Body, JsonController, Put, Res, UseBefore} from "routing-controllers";
+import {Body, JsonController, Param, Put, UseBefore} from "routing-controllers";
 import {IUser} from "@/models/IUser";
 import {AdminMiddleWare} from "@/middlewares/AdminMiddleWare";
 
 @JsonController("/user")
 @UseBefore(AdminMiddleWare)
 @injectable()
-export default class UserUpdateController extends BaseController {
+export default class UserUpdateController {
     constructor(
         @inject("IUserRepository")
         private readonly repository: IUserRepository,
     ) {
-        super();
     }
 
-    @Put()
-    async update(@Body() dto: IUser, @Res() res: Response) {
-        await this.repository.update(dto.id, dto);
+    @Put("/:id")
+    async update(@Body() dto: IUser, @Param("id") id: number) {
+        await this.repository.update(id, dto);
 
-        return this.ok(res);
+        return "OK";
     }
 }

@@ -4,41 +4,39 @@ import {inject, injectable} from "tsyringe";
 import {cookieProps, loginFailedErr, paramMissingError} from "@/shared/constants";
 import {IJwtService} from "@/services/IJwtService";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
-import {Body, JsonController, Post, Res} from "routing-controllers";
+import {BadRequestError, Body, JsonController, Post, Res, UnauthorizedError} from "routing-controllers";
 import {ILoginCredentials} from "@/models/ILoginCredentials";
-import {BaseController} from "@/controllers/BaseController";
 
 @JsonController("/auth/login")
 @injectable()
-export default class AuthLoginController extends BaseController{
+export default class AuthLoginController {
     constructor(
         @inject("IUserRepository")
         private readonly repository: IUserRepository,
         @inject("IJwtService")
         private readonly jwt: IJwtService,
     ) {
-        super();
     }
 
     @Post()
-    async login(@Body() credentials: ILoginCredentials, @Res() res: Response): Promise<void | unknown> {
+    async login(@Body() credentials: ILoginCredentials, @Res() res: Response) {
         // Check email and password present
         if (!(credentials.email && credentials.password)) {
-            return this.clientError(res, paramMissingError);
+            throw new BadRequestError(paramMissingError)
         }
 
         // Fetch user
         const user = await this.repository.findOne({email: credentials.email});
 
         if (!user) {
-            return this.unauthorized(res, loginFailedErr);
+            throw new UnauthorizedError(loginFailedErr);
         }
 
         // Check password
         const pwdPassed = await bcrypt.compare(credentials.password, user.pwdHash);
 
         if (!pwdPassed) {
-            return this.unauthorized(res, loginFailedErr);
+            throw new UnauthorizedError(loginFailedErr);
         }
 
         // Setup Admin Cookie
@@ -49,7 +47,6 @@ export default class AuthLoginController extends BaseController{
         const {key, options} = cookieProps;
         res.cookie(key, jwt, options);
 
-        return this.ok(res);
+        return "OK";
     }
-
 }

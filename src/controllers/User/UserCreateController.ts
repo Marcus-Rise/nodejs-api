@@ -1,9 +1,7 @@
-import {BaseController} from "../BaseController";
-import {Response} from "express";
 import {inject, injectable} from "tsyringe";
 import {UserRoles} from "@/entities/UserRoles";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
-import {Body, JsonController, Post, Res, UseBefore} from "routing-controllers";
+import {BadRequestError, Body, HttpCode, JsonController, Post, UseBefore} from "routing-controllers";
 import {IUserRegister} from "@/models/IUserRegister";
 import User from "@/entities/User.entity";
 import {paramMissingError} from "@/shared/constants";
@@ -13,18 +11,18 @@ import {AdminMiddleWare} from "@/middlewares/AdminMiddleWare";
 @JsonController("/user")
 @UseBefore(AdminMiddleWare)
 @injectable()
-export default class UserCreateController extends BaseController {
+export default class UserCreateController {
     constructor(
         @inject("IUserRepository")
         private readonly repository: IUserRepository,
     ) {
-        super();
     }
 
     @Post()
-    async create(@Body() dto: IUserRegister, @Res() res: Response) {
+    @HttpCode(201)
+    async create(@Body() dto: IUserRegister) {
         if (!(dto.email && dto.name && dto.password)) {
-            return this.clientError(res, paramMissingError);
+            throw new BadRequestError(paramMissingError);
         }
 
         const candidate = await this.repository.findOne({
@@ -35,7 +33,7 @@ export default class UserCreateController extends BaseController {
         });
 
         if (candidate) {
-            return this.clientError(res, "user already exist");
+            throw new BadRequestError("user already exist");
         }
 
         const password: string = await bcrypt.hash(dto.password, 12);
@@ -49,6 +47,6 @@ export default class UserCreateController extends BaseController {
 
         await this.repository.save(user);
 
-        return this.created(res);
+        return "Created";
     }
 }

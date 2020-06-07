@@ -30,5 +30,5 @@ export default useExpressServer(app, {
     controllers: [__dirname + "/controllers/**/*.{ts,js}"],
     middlewares: [__dirname + "/middlewares/**/*.{ts,js}"],
     routePrefix: "/api",
-    defaultErrorHandler: false,
+    // defaultErrorHandler: false,
 });
