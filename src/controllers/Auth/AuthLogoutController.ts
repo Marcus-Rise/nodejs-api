@@ -1,7 +1,6 @@
 import {Response} from "express";
 import {cookieProps} from "@/shared/constants";
 import {Get, JsonController, Res} from "routing-controllers";
-import {OK} from "http-status-codes";
 
 @JsonController("/auth/logout")
 export default class AuthLogoutController {
@@ -10,6 +9,6 @@ export default class AuthLogoutController {
         const {key, options} = cookieProps;
         res.clearCookie(key, options);
 
-        return res.sendStatus(OK);
+        return "OK";
     }
 }
