@@ -3,18 +3,19 @@ import {IUserRepository} from "@/repositories/User/IUserRepository";
 import {mock} from 'jest-mock-extended';
 import User from "@/entities/User.entity";
 import app from "@/Server";
-import request, {SuperTest, Test} from "supertest";
+import supertest, {Test} from "supertest";
 import {IUserRegister} from "@/models/IUserRegister";
 import {login} from "../../LoginAgent";
 
 describe("UserCreateController", () => {
-    let appAgent: SuperTest<Test>;
+    let request: Test;
     let jwtCookie: string;
 
     beforeEach((done) => {
-        appAgent = request.agent(app);
-        login(appAgent, (cookie: string) => {
+        const agent = supertest.agent(app);
+        login(agent, (cookie: string) => {
             jwtCookie = cookie;
+            request = agent.post("/api/user");
             done();
         });
     });
@@ -30,8 +31,7 @@ describe("UserCreateController", () => {
                 useValue: userRepositoryMock,
             });
 
-            const res = await appAgent
-                .post("/api/user")
+            const res = await request
                 .set("Cookie", jwtCookie)
                 .send(<IUserRegister>{name: "name", email: "test", password: "p"});
 
@@ -53,8 +53,7 @@ describe("UserCreateController", () => {
                     useValue: userRepositoryMock,
                 });
 
-                const res = await appAgent
-                    .post("/api/user")
+                const res = await request
                     .set("Cookie", jwtCookie)
                     .send(<IUserRegister>{
                         name: user.name,
@@ -74,8 +73,7 @@ describe("UserCreateController", () => {
                     useValue: userRepositoryMock,
                 });
 
-                const res = await appAgent
-                    .post("/api/user")
+                const res = await request
                     .set("Cookie", jwtCookie);
 
                 expect(res.status).toBe(400);
