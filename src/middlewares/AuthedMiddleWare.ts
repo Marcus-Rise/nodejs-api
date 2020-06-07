@@ -1,7 +1,7 @@
 import {ExpressMiddlewareInterface} from "routing-controllers";
 import {inject, injectable} from "tsyringe";
 import {IJwtService} from "@/services/IJwtService";
-import {cookieProps} from "@shared/constants";
+import {cookieProps} from "@/shared/constants";
 import {UNAUTHORIZED} from "http-status-codes";
 import {NextFunction, Request, Response} from "express";
 

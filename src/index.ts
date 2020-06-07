@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import './LoadEnv';
-import app from '@server';
-import logger from '@shared/Logger';
+import app from '@/Server';
+import logger from '@/shared/Logger';
 import {connectToDb} from "@/Db";
 
 connectToDb()

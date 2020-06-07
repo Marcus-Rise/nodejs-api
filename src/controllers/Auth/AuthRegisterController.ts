@@ -1,12 +1,12 @@
 import {BaseController} from "../BaseController";
 import {Response} from "express";
 import {inject, injectable} from "tsyringe";
-import {UserRoles} from "@entities/UserRoles";
+import {UserRoles} from "@/entities/UserRoles";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
 import {Body, JsonController, Post, Res} from "routing-controllers";
 import {IUserRegister} from "@/models/IUserRegister";
-import User from "@entities/User.entity";
-import {paramMissingError} from "@shared/constants";
+import User from "@/entities/User.entity";
+import {paramMissingError} from "@/shared/constants";
 import bcrypt from "bcrypt";
 
 @JsonController("/auth/register")

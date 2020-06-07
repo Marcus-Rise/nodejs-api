@@ -13,6 +13,7 @@ FROM node_modules as build
 
 COPY ./ .
 
+RUN npm run test
 RUN npm run build
 
 FROM base as dist

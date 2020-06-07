@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import {Response} from "express";
 import {inject, injectable} from "tsyringe";
-import {cookieProps, loginFailedErr, paramMissingError} from "@shared/constants";
+import {cookieProps, loginFailedErr, paramMissingError} from "@/shared/constants";
 import {IJwtService} from "@/services/IJwtService";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
 import {Body, JsonController, Post, Res} from "routing-controllers";

@@ -16,18 +16,6 @@
     "paths": {
       "@/*": [
         "src/*"
-      ],
-      "@daos/*": [
-        "src/daos/*"
-      ],
-      "@entities/*": [
-        "src/entities/*"
-      ],
-      "@shared/*": [
-        "src/shared/*"
-      ],
-      "@server": [
-        "src/Server"
       ]
     },
     "plugins": [
@@ -36,7 +24,8 @@
       }
     ],
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     "typeRoots": [
       "node_modules/@types"
