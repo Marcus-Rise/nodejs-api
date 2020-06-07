@@ -5,6 +5,7 @@ import app from "@/Server";
 import supertest, {Test} from "supertest";
 import {login} from "../../LoginAgent";
 import {DeleteResult} from "typeorm";
+import {UserRoles} from "@/entities/UserRoles";
 
 describe("UserDeleteController", () => {
     let request: Test;
@@ -12,7 +13,7 @@ describe("UserDeleteController", () => {
 
     beforeEach((done) => {
         const agent = supertest.agent(app);
-        login(agent, (cookie: string) => {
+        login(agent, [UserRoles.Admin],(cookie: string) => {
             jwtCookie = cookie;
             request = agent.delete("/api/user/1");
             done();

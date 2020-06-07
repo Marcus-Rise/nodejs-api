@@ -6,6 +6,7 @@ import app from "@/Server";
 import supertest, {Test} from "supertest";
 import {IUserRegister} from "@/models/IUserRegister";
 import {login} from "../../LoginAgent";
+import {UserRoles} from "@/entities/UserRoles";
 
 describe("UserCreateController", () => {
     let request: Test;
@@ -13,9 +14,10 @@ describe("UserCreateController", () => {
 
     beforeEach((done) => {
         const agent = supertest.agent(app);
-        login(agent, (cookie: string) => {
+        request = agent.post("/api/user");
+
+        login(agent, [UserRoles.Admin],(cookie: string) => {
             jwtCookie = cookie;
-            request = agent.post("/api/user");
             done();
         });
     });
@@ -77,6 +79,67 @@ describe("UserCreateController", () => {
                     .set("Cookie", jwtCookie);
 
                 expect(res.status).toBe(400);
+            });
+        });
+
+        describe("403", () => {
+            beforeEach((done) => {
+                const agent = supertest.agent(app);
+                request = agent.post("/api/user");
+
+                login(agent, [UserRoles.Standard],(cookie: string) => {
+                    jwtCookie = cookie;
+                    done();
+                });
+            });
+
+            test("unauthorized", async () => {
+                const userRepositoryMock = mock<IUserRepository>();
+
+                const user = new User(
+                    "name",
+                    "email"
+                );
+
+                userRepositoryMock.findOne.mockResolvedValueOnce(user);
+
+                container.register("IUserRepository", {
+                    useValue: userRepositoryMock,
+                });
+
+                const res = await request
+                    .send(<IUserRegister>{
+                        name: user.name,
+                        email: user.email,
+                        password: "p"
+                    });
+
+                expect(res.status).toBe(403);
+            });
+
+            test("not admin", async () => {
+                const userRepositoryMock = mock<IUserRepository>();
+
+                const user = new User(
+                    "name",
+                    "email"
+                );
+
+                userRepositoryMock.findOne.mockResolvedValueOnce(user);
+
+                container.register("IUserRepository", {
+                    useValue: userRepositoryMock,
+                });
+
+                const res = await request
+                    .set("Cookie", jwtCookie)
+                    .send(<IUserRegister>{
+                        name: user.name,
+                        email: user.email,
+                        password: "p"
+                    });
+
+                expect(res.status).toBe(403);
             });
         });
     });

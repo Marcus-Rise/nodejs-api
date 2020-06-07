@@ -1,15 +1,14 @@
 import {inject, injectable} from "tsyringe";
 import {UserRoles} from "@/entities/UserRoles";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
-import {BadRequestError, Body, HttpCode, JsonController, Post, UseBefore} from "routing-controllers";
+import {Authorized, BadRequestError, Body, HttpCode, JsonController, Post} from "routing-controllers";
 import {IUserRegister} from "@/models/IUserRegister";
 import User from "@/entities/User.entity";
 import {paramMissingError} from "@/shared/constants";
 import bcrypt from "bcrypt";
-import {AdminMiddleWare} from "@/middlewares/AdminMiddleWare";
 
 @JsonController("/user")
-@UseBefore(AdminMiddleWare)
+@Authorized(UserRoles.Admin)
 @injectable()
 export default class UserCreateController {
     constructor(
@@ -41,7 +40,7 @@ export default class UserCreateController {
         const user = new User(
             dto.name,
             dto.email,
-            UserRoles.Standard,
+            [UserRoles.Standard],
             password,
         );
 
