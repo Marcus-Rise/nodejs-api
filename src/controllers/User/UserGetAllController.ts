@@ -2,11 +2,11 @@ import {Response} from "express";
 import {inject, injectable} from "tsyringe";
 import {IUser} from "@/models/IUser";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
-import {Get, JsonController, Res, UseBefore} from "routing-controllers";
-import {AuthedMiddleWare} from "@/middlewares/AuthedMiddleWare";
+import {Authorized, Get, JsonController, Res} from "routing-controllers";
+import {UserRoles} from "@/entities/UserRoles";
 
 @JsonController("/user")
-@UseBefore(AuthedMiddleWare)
+@Authorized(UserRoles.Admin)
 @injectable()
 export default class UserGetAllController {
     constructor(

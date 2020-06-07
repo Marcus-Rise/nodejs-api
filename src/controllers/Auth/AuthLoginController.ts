@@ -42,7 +42,7 @@ export default class AuthLoginController {
         // Setup Admin Cookie
         const jwt = await this.jwt.encode({
             id: user.id,
-            role: user.role,
+            roles: user.roles,
         });
         const {key, options} = cookieProps;
         res.cookie(key, jwt, options);

@@ -14,7 +14,7 @@ describe("UserUpdateController", () => {
 
     beforeEach((done) => {
         const agent = supertest.agent(app);
-        login(agent, (cookie: string) => {
+        login(agent, [UserRoles.Admin],(cookie: string) => {
             jwtCookie = cookie;
             request = agent.put("/api/user/1");
             done();
@@ -36,7 +36,7 @@ describe("UserUpdateController", () => {
                 .send(<IUser>{
                     email: "email",
                     name: "name",
-                    role: UserRoles.Standard,
+                    roles: [UserRoles.Standard],
                 });
 
             expect(res.status).toBe(200);

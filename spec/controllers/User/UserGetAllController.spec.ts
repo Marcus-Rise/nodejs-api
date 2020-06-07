@@ -6,6 +6,7 @@ import {mock} from "jest-mock-extended";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
 import {container} from "@/services/serviceContainer";
 import User from "@/entities/User.entity";
+import {UserRoles} from "@/entities/UserRoles";
 
 describe("UserGetAllController", () => {
     let request: Test;
@@ -13,7 +14,7 @@ describe("UserGetAllController", () => {
 
     beforeEach((done) => {
         const agent = supertest.agent(app);
-        login(agent, (cookie: string) => {
+        login(agent, [UserRoles.Admin],(cookie: string) => {
             jwtCookie = cookie;
             request = agent.get("/api/user");
             done();

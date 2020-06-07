@@ -1,11 +1,11 @@
 import {inject, injectable} from "tsyringe";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
-import {Body, JsonController, Param, Put, UseBefore} from "routing-controllers";
+import {Authorized, Body, JsonController, Param, Put} from "routing-controllers";
 import {IUser} from "@/models/IUser";
-import {AdminMiddleWare} from "@/middlewares/AdminMiddleWare";
+import {UserRoles} from "@/entities/UserRoles";
 
 @JsonController("/user")
-@UseBefore(AdminMiddleWare)
+@Authorized(UserRoles.Admin)
 @injectable()
 export default class UserUpdateController {
     constructor(

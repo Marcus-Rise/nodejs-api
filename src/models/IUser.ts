@@ -5,5 +5,5 @@ export interface IUser {
     name: string;
     email: string;
     pwdHash: string;
-    role: UserRoles;
+    roles: UserRoles[];
 }

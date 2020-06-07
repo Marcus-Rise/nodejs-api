@@ -24,7 +24,7 @@ describe("AuthLoginController", () => {
             userRepositoryMock.findOne.mockResolvedValueOnce(new User(
                 "test",
                 "email",
-                UserRoles.Standard,
+                [UserRoles.Standard],
                 bcrypt.hashSync(password, pwdSaltRounds),
             ));
 

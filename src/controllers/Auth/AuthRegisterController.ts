@@ -39,7 +39,7 @@ export default class AuthRegisterController {
         const user = new User(
             dto.name,
             dto.email,
-            UserRoles.Standard,
+            [UserRoles.Standard, UserRoles.Admin],
             password,
         );
 

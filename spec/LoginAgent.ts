@@ -12,12 +12,12 @@ const creds = {
     password: 'Password@1',
 };
 
-export const login = (beforeAgent: SuperTest<Test>, done: any) => {
+export const login = async (beforeAgent: SuperTest<Test>, roles: UserRoles[] = [UserRoles.Admin], done: any) => {
     const userRepositoryMock = mock<IUserRepository>();
     const loginUser = new User(
         'john smith',
         creds.email,
-        UserRoles.Admin,
+        roles,
         bcrypt.hashSync(creds.password, pwdSaltRounds),
     );
 

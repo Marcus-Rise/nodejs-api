@@ -13,20 +13,20 @@ export class User {
         unique: true,
     })
     public email: string;
-    @Column()
-    public role: UserRoles;
+    @Column("simple-array")
+    public roles: UserRoles[];
     @Column()
     public pwdHash: string;
 
     constructor(
         name: string = "",
         email: string = "",
-        role: UserRoles = UserRoles.Standard,
+        roles: UserRoles[] = [UserRoles.Standard],
         pwdHash: string = "",
     ) {
         this.name = name;
         this.email = email;
-        this.role = role;
+        this.roles = roles;
         this.pwdHash = pwdHash;
     }
 }

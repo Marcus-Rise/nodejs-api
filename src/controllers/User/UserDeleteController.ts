@@ -1,10 +1,10 @@
 import {inject, injectable} from "tsyringe";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
-import {Delete, JsonController, Param, UseBefore} from "routing-controllers";
-import {AdminMiddleWare} from "@/middlewares/AdminMiddleWare";
+import {Authorized, Delete, JsonController, Param} from "routing-controllers";
+import {UserRoles} from "@/entities/UserRoles";
 
 @JsonController("/user")
-@UseBefore(AdminMiddleWare)
+@Authorized(UserRoles.Admin)
 @injectable()
 export default class UserDeleteController {
     constructor(
