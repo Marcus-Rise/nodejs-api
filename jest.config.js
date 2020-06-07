@@ -11,7 +11,12 @@ module.exports = {
         '^@/(.*)$': '<rootDir>/src/$1',
     },
     collectCoverageFrom: [
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "!src/index.ts",
+        "!src/shared/*",
+        "!src/IoCAdapter.ts",
+        "!src/Db.ts",
+        "!src/LoadEnv.ts",
     ],
     coverageThreshold: {
         global: {
