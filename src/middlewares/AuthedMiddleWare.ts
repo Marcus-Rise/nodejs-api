@@ -1,8 +1,7 @@
-import {ExpressMiddlewareInterface} from "routing-controllers";
+import {ExpressMiddlewareInterface, UnauthorizedError} from "routing-controllers";
 import {inject, injectable} from "tsyringe";
 import {IJwtService} from "@/services/IJwtService";
 import {cookieProps} from "@/shared/constants";
-import {UNAUTHORIZED} from "http-status-codes";
 import {NextFunction, Request, Response} from "express";
 
 @injectable()
@@ -14,21 +13,13 @@ export class AuthedMiddleWare implements ExpressMiddlewareInterface {
     }
 
     async use(req: Request, res: Response, next: NextFunction) {
-        const jwtError = "JWT not present in signed cookie.";
+        // Get json-web-token
+        const jwt = req.signedCookies[cookieProps.key];
 
-        try {
-            // Get json-web-token
-            const jwt = req.signedCookies[cookieProps.key];
-
-            if (!jwt) {
-                throw Error(jwtError);
-            }
-
-            next();
-        } catch (err) {
-            return res.status(UNAUTHORIZED).json({
-                error: err.message,
-            });
+        if (!jwt) {
+            throw new UnauthorizedError("JWT not present in signed cookie.");
         }
+
+        next();
     }
 }
