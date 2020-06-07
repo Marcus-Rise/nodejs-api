@@ -3,13 +3,20 @@ import {IUserRepository} from "@/repositories/User/IUserRepository";
 import {mock} from 'jest-mock-extended';
 import User from "@/entities/User.entity";
 import app from "@/Server";
-import request from "supertest";
+import supertest, {Test} from "supertest";
 import {UserRoles} from "@/entities/UserRoles";
 import bcrypt from "bcrypt";
 import {pwdSaltRounds} from "@/shared/constants";
 
 describe("AuthLoginController", () => {
     describe("login", () => {
+        let request: Test;
+
+        beforeEach(() => {
+            request = supertest(app)
+                .post("/api/auth/login");
+        });
+
         test("200", async () => {
             const userRepositoryMock = mock<IUserRepository>();
             const password = "p";
@@ -25,9 +32,7 @@ describe("AuthLoginController", () => {
                 useValue: userRepositoryMock,
             });
 
-            const res = await request(app)
-                .post("/api/auth/login")
-                .send({email: "test", password});
+            const res = await request.send({email: "test", password});
 
             expect(res.status).toBe(200);
         });
@@ -39,8 +44,7 @@ describe("AuthLoginController", () => {
                 useValue: userRepositoryMock,
             });
 
-            const res = await request(app)
-                .post("/api/auth/login");
+            const res = await request;
 
             expect(res.status).toBe(400);
         });
@@ -55,9 +59,7 @@ describe("AuthLoginController", () => {
                     useValue: userRepositoryMock,
                 });
 
-                const res = await request(app)
-                    .post("/api/auth/login")
-                    .send({email: "test", password: "password"});
+                const res = await request.send({email: "test", password: "password"});
 
                 expect(res.status).toBe(401);
             });
@@ -71,9 +73,7 @@ describe("AuthLoginController", () => {
                     useValue: userRepositoryMock,
                 });
 
-                const res = await request(app)
-                    .post("/api/auth/login")
-                    .send({email: "test", password: "password"});
+                const res = await request.send({email: "test", password: "password"});
 
                 expect(res.status).toBe(401);
             });
