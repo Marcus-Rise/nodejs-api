@@ -1,9 +1,11 @@
 import bcrypt from 'bcrypt';
 import {SuperTest, Test} from 'supertest';
 import {User} from '@/entities/User.entity';
-import {UserDaoMock as UserDao} from '@/repositories/User/UserDao.mock';
 import {pwdSaltRounds} from '@/shared/constants';
 import {UserRoles} from "@/entities/UserRoles";
+import {mock} from "jest-mock-extended";
+import {IUserRepository} from "@/repositories/User/IUserRepository";
+import {container} from "@/services/serviceContainer";
 
 const creds = {
     email: 'jsmith@gmail.com',
@@ -11,15 +13,22 @@ const creds = {
 };
 
 export const login = (beforeAgent: SuperTest<Test>, done: any) => {
-    // Setup dummy data
-    const role = UserRoles.Admin;
-    const pwdHash = bcrypt.hashSync(creds.password, pwdSaltRounds);
-    const loginUser = new User('john smith', creds.email, role, pwdHash);
-    spyOn(UserDao.prototype, 'getOne').and.returnValue(Promise.resolve(loginUser));
-    // Call Login API
+    const userRepositoryMock = mock<IUserRepository>();
+    const loginUser = new User(
+        'john smith',
+        creds.email,
+        UserRoles.Admin,
+        bcrypt.hashSync(creds.password, pwdSaltRounds),
+    );
+
+    userRepositoryMock.findOne.mockResolvedValueOnce(loginUser);
+
+    container.register("IUserRepository", {
+        useValue: userRepositoryMock,
+    });
+
     beforeAgent
         .post('/api/auth/login')
-        .type('form')
         .send(creds)
         .end((err: Error, res: any) => {
             if (err) {
