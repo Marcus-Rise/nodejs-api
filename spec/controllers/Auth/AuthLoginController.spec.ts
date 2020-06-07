@@ -35,6 +35,7 @@ describe("AuthLoginController", () => {
             const res = await request.send({email: "test", password});
 
             expect(res.status).toBe(200);
+            expect(res.header["set-cookie"]).toHaveLength(1);
         });
 
         test("400", async () => {
