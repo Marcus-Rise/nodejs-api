@@ -5,7 +5,7 @@ import User from "@/entities/User.entity";
 import app from "@/Server";
 import request, {SuperTest, Test} from "supertest";
 import {IUserRegister} from "@/models/IUserRegister";
-import {login} from "../../support/LoginAgent";
+import {login} from "../../LoginAgent";
 
 describe("UserCreateController", () => {
     let appAgent: SuperTest<Test>;
