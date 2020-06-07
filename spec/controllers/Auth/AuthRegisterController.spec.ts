@@ -3,12 +3,19 @@ import {IUserRepository} from "@/repositories/User/IUserRepository";
 import {mock} from 'jest-mock-extended';
 import User from "@/entities/User.entity";
 import app from "@/Server";
-import request from "supertest";
+import supertest, {Test} from "supertest";
 import {IUserRegister} from "@/models/IUserRegister";
 
 describe("AuthRegisterController", () => {
     describe("create", () => {
-        test("200", async () => {
+        let request: Test;
+
+        beforeEach(() => {
+            request = supertest(app)
+                .post("/api/auth/register");
+        });
+
+        test("201", async () => {
             const userRepositoryMock = mock<IUserRepository>();
 
             userRepositoryMock.findOne.mockResolvedValueOnce(undefined);
@@ -17,9 +24,11 @@ describe("AuthRegisterController", () => {
                 useValue: userRepositoryMock,
             });
 
-            const res = await request(app)
-                .post("/api/auth/register")
-                .send(<IUserRegister>{name: "name", email: "test", password: "p"});
+            const res = await request.send(<IUserRegister>{
+                name: "name",
+                email: "test",
+                password: "p",
+            });
 
             expect(res.status).toBe(201);
         });
@@ -29,8 +38,8 @@ describe("AuthRegisterController", () => {
                 const userRepositoryMock = mock<IUserRepository>();
 
                 const user = new User(
-                  "name",
-                  "email"
+                    "name",
+                    "email"
                 );
 
                 userRepositoryMock.findOne.mockResolvedValueOnce(user);
@@ -39,13 +48,11 @@ describe("AuthRegisterController", () => {
                     useValue: userRepositoryMock,
                 });
 
-                const res = await request(app)
-                    .post("/api/auth/register")
-                    .send(<IUserRegister>{
-                        name: user.name,
-                        email: user.email,
-                        password: "p"
-                    });
+                const res = await request.send(<IUserRegister>{
+                    name: user.name,
+                    email: user.email,
+                    password: "p"
+                });
 
                 expect(res.status).toBe(400);
             });
@@ -59,8 +66,7 @@ describe("AuthRegisterController", () => {
                     useValue: userRepositoryMock,
                 });
 
-                const res = await request(app)
-                    .post("/api/auth/login")
+                const res = await request;
 
                 expect(res.status).toBe(400);
             });
