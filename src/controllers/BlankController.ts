@@ -1,19 +1,17 @@
-import {BaseController} from "@/controllers/BaseController";
-import {Get, JsonController, Res} from "routing-controllers";
-import {Response} from "express";
+import {Get, JsonController} from "routing-controllers";
 import {IUser} from "@/models/IUser";
 import User from "@/entities/User.entity";
 
 @JsonController()
-export class BlankController extends BaseController {
+export class BlankController {
     @Get()
-    async get(@Res() res: Response) {
+    async get(): Promise<IUser[]> {
         let array: IUser[] = [];
 
         for (const item of new Array(100)) {
             array.push(new User());
         }
 
-        return this.ok<IUser[]>(res, array);
+        return array;
     }
 }
