@@ -14,7 +14,7 @@ describe("AuthLoginController", () => {
             const userRepositoryMock = mock<IUserRepository>();
             const password = "p";
 
-            userRepositoryMock.findOne.mockResolvedValue(new User(
+            userRepositoryMock.findOne.mockResolvedValueOnce(new User(
                 "test",
                 "email",
                 UserRoles.Standard,
@@ -49,7 +49,7 @@ describe("AuthLoginController", () => {
             test("user not found", async () => {
                 const userRepositoryMock = mock<IUserRepository>();
 
-                userRepositoryMock.findOne.mockResolvedValue(undefined);
+                userRepositoryMock.findOne.mockResolvedValueOnce(undefined);
 
                 container.register("IUserRepository", {
                     useValue: userRepositoryMock,
@@ -65,7 +65,7 @@ describe("AuthLoginController", () => {
             test("wrong password", async () => {
                 const userRepositoryMock = mock<IUserRepository>();
 
-                userRepositoryMock.findOne.mockResolvedValue(new User());
+                userRepositoryMock.findOne.mockResolvedValueOnce(new User());
 
                 container.register("IUserRepository", {
                     useValue: userRepositoryMock,

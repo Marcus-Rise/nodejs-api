@@ -11,7 +11,7 @@ describe("AuthRegisterController", () => {
         test("200", async () => {
             const userRepositoryMock = mock<IUserRepository>();
 
-            userRepositoryMock.findOne.mockResolvedValue(undefined);
+            userRepositoryMock.findOne.mockResolvedValueOnce(undefined);
 
             container.register("IUserRepository", {
                 useValue: userRepositoryMock,
@@ -33,7 +33,7 @@ describe("AuthRegisterController", () => {
                   "email"
                 );
 
-                userRepositoryMock.findOne.mockResolvedValue(user);
+                userRepositoryMock.findOne.mockResolvedValueOnce(user);
 
                 container.register("IUserRepository", {
                     useValue: userRepositoryMock,
@@ -53,7 +53,7 @@ describe("AuthRegisterController", () => {
             test("empty credentials", async () => {
                 const userRepositoryMock = mock<IUserRepository>();
 
-                userRepositoryMock.findOne.mockResolvedValue(new User());
+                userRepositoryMock.findOne.mockResolvedValueOnce(new User());
 
                 container.register("IUserRepository", {
                     useValue: userRepositoryMock,
