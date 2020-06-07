@@ -1,11 +1,10 @@
-PUT http://{{host}}:{{port}}/api/user
+PUT http://{{host}}:{{port}}/api/user/2
 Content-Type: application/json
 
 {
   "name": "name1",
   "email": "email",
-  "role": 0,
-  "id": 2
+  "role": 0
 }
 
 ###
