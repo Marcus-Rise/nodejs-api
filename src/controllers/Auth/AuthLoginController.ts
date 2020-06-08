@@ -19,7 +19,7 @@ export default class AuthLoginController {
     }
 
     @Post()
-    async login(@Body() dto: UserLoginDto, @Res() res: Response) {
+    async login(@Body() dto: UserLoginDto, @Res() res: Response): Promise<string> {
         // Fetch user
         const user = await this.repository.findOne({email: dto.email});
 

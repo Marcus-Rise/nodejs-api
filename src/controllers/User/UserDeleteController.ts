@@ -14,7 +14,7 @@ export default class UserDeleteController {
     }
 
     @Delete("/:id")
-    async delete(@Param("id") id: number) {
+    async delete(@Param("id") id: number): Promise<string> {
         await this.repository.delete(id);
 
         return "OK";

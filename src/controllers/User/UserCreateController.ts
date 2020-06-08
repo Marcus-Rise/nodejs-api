@@ -18,7 +18,7 @@ export default class UserCreateController {
 
     @Post()
     @HttpCode(201)
-    async create(@Body() dto: UserCreateDto) {
+    async create(@Body() dto: UserCreateDto): Promise<string> {
         const candidate = await this.repository.findOne({
             where: [
                 {email: dto.email},

@@ -15,7 +15,7 @@ export default class UserUpdateController {
     }
 
     @Put("/:id")
-    async update(@Body() dto: UserUpdateDto, @Param("id") id: number) {
+    async update(@Body() dto: UserUpdateDto, @Param("id") id: number): Promise<string> {
         await this.repository.update(id, dto);
 
         return "OK";

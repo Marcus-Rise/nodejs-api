@@ -17,7 +17,7 @@ export default class AuthRegisterController {
 
     @Post()
     @HttpCode(201)
-    async create(@Body() dto: UserRegisterDto) {
+    async create(@Body() dto: UserRegisterDto): Promise<string> {
         const candidate = await this.repository.findOne({
             where: [
                 {email: dto.email},
