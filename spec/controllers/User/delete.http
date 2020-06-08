@@ -1,1 +1,2 @@
 DELETE http://{{host}}:{{port}}/api/user/1
+Cookie: {{my_cookie}}
