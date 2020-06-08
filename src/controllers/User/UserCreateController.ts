@@ -2,10 +2,9 @@ import {inject, injectable} from "tsyringe";
 import {UserRoles} from "@/entities/UserRoles";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
 import {Authorized, BadRequestError, Body, HttpCode, JsonController, Post} from "routing-controllers";
-import {IUserRegister} from "@/models/IUserRegister";
 import User from "@/entities/User.entity";
-import {paramMissingError} from "@/shared/constants";
 import bcrypt from "bcrypt";
+import {UserCreateDto} from "@/dto/UserCreateDto";
 
 @JsonController("/user")
 @Authorized(UserRoles.Admin)
@@ -19,11 +18,7 @@ export default class UserCreateController {
 
     @Post()
     @HttpCode(201)
-    async create(@Body() dto: IUserRegister) {
-        if (!(dto.email && dto.name && dto.password)) {
-            throw new BadRequestError(paramMissingError);
-        }
-
+    async create(@Body() dto: UserCreateDto) {
         const candidate = await this.repository.findOne({
             where: [
                 {email: dto.email},
