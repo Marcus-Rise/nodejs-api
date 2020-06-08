@@ -59,6 +59,7 @@ export default useExpressServer(app, {
 
         return res;
     },
+    cors: true,
     classTransformer: true,
     routePrefix: "/api",
     controllers: [__dirname + "/controllers/**/*.{ts,js}"],
