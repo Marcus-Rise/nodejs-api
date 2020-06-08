@@ -1,8 +1,7 @@
-import {Response} from "express";
 import {inject, injectable} from "tsyringe";
 import {IUser} from "@/models/IUser";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
-import {Authorized, Get, JsonController, Res} from "routing-controllers";
+import {Authorized, Get, JsonController} from "routing-controllers";
 import {UserRoles} from "@/entities/UserRoles";
 
 @JsonController("/user")
@@ -16,9 +15,7 @@ export default class UserGetAllController {
     }
 
     @Get()
-    async get(@Res() res: Response) {
-        const array: IUser[] = await this.repository.find();
-
-        return array;
+    async get(): Promise<IUser[]> {
+        return await this.repository.find();
     }
 }

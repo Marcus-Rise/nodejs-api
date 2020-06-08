@@ -1,5 +1,6 @@
 POST http://{{host}}:{{port}}/api/user
 Content-Type: application/json
+Cookie: {{my_cookie}}
 
 {
   "name": "name",

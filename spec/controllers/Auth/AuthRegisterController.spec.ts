@@ -26,7 +26,7 @@ describe("AuthRegisterController", () => {
 
             const res = await request.send(<IUserRegister>{
                 name: "name",
-                email: "test",
+                email: "test@test.test",
                 password: "p",
             });
 
@@ -39,7 +39,7 @@ describe("AuthRegisterController", () => {
 
                 const user = new User(
                     "name",
-                    "email"
+                    "test@test.test"
                 );
 
                 userRepositoryMock.findOne.mockResolvedValueOnce(user);

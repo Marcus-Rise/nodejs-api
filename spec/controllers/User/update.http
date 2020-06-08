@@ -1,10 +1,10 @@
-PUT http://{{host}}:{{port}}/api/user/2
+PUT http://{{host}}:{{port}}/api/user/4
 Content-Type: application/json
+Cookie: {{my_cookie}}
 
 {
-  "name": "name1",
-  "email": "email",
-  "role": 0
+  "name": "name2",
+  "email": "email@aww.www"
 }
 
 ###

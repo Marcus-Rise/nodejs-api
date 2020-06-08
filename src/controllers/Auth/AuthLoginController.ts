@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt';
 import {Response} from "express";
 import {inject, injectable} from "tsyringe";
-import {cookieProps, loginFailedErr, paramMissingError} from "@/shared/constants";
+import {cookieProps} from "@/shared/constants";
 import {IJwtService} from "@/services/IJwtService";
 import {IUserRepository} from "@/repositories/User/IUserRepository";
-import {BadRequestError, Body, JsonController, Post, Res, UnauthorizedError} from "routing-controllers";
-import {ILoginCredentials} from "@/models/ILoginCredentials";
+import {Body, JsonController, Post, Res, UnauthorizedError} from "routing-controllers";
+import {UserLoginDto} from "@/dto/UserLoginDto";
 
 @JsonController("/auth/login")
 @injectable()
@@ -19,24 +19,19 @@ export default class AuthLoginController {
     }
 
     @Post()
-    async login(@Body() credentials: ILoginCredentials, @Res() res: Response) {
-        // Check email and password present
-        if (!(credentials.email && credentials.password)) {
-            throw new BadRequestError(paramMissingError)
-        }
-
+    async login(@Body() dto: UserLoginDto, @Res() res: Response): Promise<string> {
         // Fetch user
-        const user = await this.repository.findOne({email: credentials.email});
+        const user = await this.repository.findOne({email: dto.email});
 
         if (!user) {
-            throw new UnauthorizedError(loginFailedErr);
+            throw new UnauthorizedError();
         }
 
         // Check password
-        const pwdPassed = await bcrypt.compare(credentials.password, user.pwdHash);
+        const pwdPassed = await bcrypt.compare(dto.password, user.pwdHash);
 
         if (!pwdPassed) {
-            throw new UnauthorizedError(loginFailedErr);
+            throw new UnauthorizedError();
         }
 
         // Setup Admin Cookie

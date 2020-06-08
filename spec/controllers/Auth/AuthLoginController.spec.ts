@@ -18,21 +18,23 @@ describe("AuthLoginController", () => {
         });
 
         test("200", async () => {
-            const userRepositoryMock = mock<IUserRepository>();
             const password = "p";
-
-            userRepositoryMock.findOne.mockResolvedValueOnce(new User(
+            const user = new User(
                 "test",
-                "email",
+                "email@email.email",
                 [UserRoles.Standard],
                 bcrypt.hashSync(password, pwdSaltRounds),
-            ));
+            );
+
+            const userRepositoryMock = mock<IUserRepository>();
+
+            userRepositoryMock.findOne.mockResolvedValueOnce(user);
 
             container.register("IUserRepository", {
                 useValue: userRepositoryMock,
             });
 
-            const res = await request.send({email: "test", password});
+            const res = await request.send({email: user.email, password});
 
             expect(res.status).toBe(200);
             expect(res.header["set-cookie"]).toHaveLength(1);
@@ -60,7 +62,7 @@ describe("AuthLoginController", () => {
                     useValue: userRepositoryMock,
                 });
 
-                const res = await request.send({email: "test", password: "password"});
+                const res = await request.send({email: "email@email.email", password: "password"});
 
                 expect(res.status).toBe(401);
             });
@@ -74,7 +76,7 @@ describe("AuthLoginController", () => {
                     useValue: userRepositoryMock,
                 });
 
-                const res = await request.send({email: "test", password: "password"});
+                const res = await request.send({email: "email@email.email", password: "password"});
 
                 expect(res.status).toBe(401);
             });

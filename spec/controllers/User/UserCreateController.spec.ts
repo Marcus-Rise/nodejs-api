@@ -35,7 +35,11 @@ describe("UserCreateController", () => {
 
             const res = await request
                 .set("Cookie", jwtCookie)
-                .send(<IUserRegister>{name: "name", email: "test", password: "p"});
+                .send(<IUserRegister>{
+                    name: "name",
+                    email: "test@test.test",
+                    password: "p",
+                });
 
             expect(res.status).toBe(201);
         });
@@ -46,7 +50,7 @@ describe("UserCreateController", () => {
 
                 const user = new User(
                     "name",
-                    "email"
+                    "test@test.test"
                 );
 
                 userRepositoryMock.findOne.mockResolvedValueOnce(user);
@@ -88,7 +92,7 @@ describe("UserCreateController", () => {
 
                 const user = new User(
                     "name",
-                    "email"
+                    "test@test.test"
                 );
 
                 userRepositoryMock.findOne.mockResolvedValueOnce(user);

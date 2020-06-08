@@ -5,7 +5,7 @@ import {Get, JsonController, Res} from "routing-controllers";
 @JsonController("/auth/logout")
 export default class AuthLogoutController {
     @Get()
-    async logout(@Res() res: Response) {
+    async logout(@Res() res: Response): Promise<string> {
         const {key, options} = cookieProps;
         res.clearCookie(key, options);
 

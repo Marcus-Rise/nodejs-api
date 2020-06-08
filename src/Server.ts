@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
@@ -58,6 +59,7 @@ export default useExpressServer(app, {
 
         return res;
     },
+    classTransformer: true,
     routePrefix: "/api",
     controllers: [__dirname + "/controllers/**/*.{ts,js}"],
     middlewares: [__dirname + "/middlewares/**/*.{ts,js}"],
